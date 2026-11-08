@@ -35,6 +35,7 @@ import {
 
 // Import all reducer arg schemas
 import AnalyzeCascadeReducer from "./analyze_cascade_reducer";
+import IngestDemoTelemetryReducer from "./ingest_demo_telemetry_reducer";
 import LogIncidentReducer from "./log_incident_reducer";
 import SeedDemoCampusReducer from "./seed_demo_campus_reducer";
 import SeedDependencyRulesReducer from "./seed_dependency_rules_reducer";
@@ -43,6 +44,7 @@ import SeedMultiSiloCampusReducer from "./seed_multi_silo_campus_reducer";
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import ActiveFaultRow from "./active_fault_table";
 import AssetProfileRow from "./asset_profile_table";
 import CascadeAssessmentRow from "./cascade_assessment_table";
 import DependencyRuleRow from "./dependency_rule_table";
@@ -59,6 +61,17 @@ import WorkOrderRow from "./work_order_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  activeFault: __table({
+    name: 'active_fault',
+    indexes: [
+      { accessor: 'component_id', name: 'active_fault_component_id_idx_btree', algorithm: 'btree', columns: [
+        'componentId',
+      ] },
+    ],
+    constraints: [
+      { name: 'active_fault_component_id_key', constraint: 'unique', columns: ['componentId'] },
+    ],
+  }, ActiveFaultRow),
   assetProfile: __table({
     name: 'asset_profile',
     indexes: [
@@ -185,6 +198,7 @@ const tablesSchema = __schema({
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
   __reducerSchema("analyze_cascade", AnalyzeCascadeReducer),
+  __reducerSchema("ingest_demo_telemetry", IngestDemoTelemetryReducer),
   __reducerSchema("log_incident", LogIncidentReducer),
   __reducerSchema("seed_demo_campus", SeedDemoCampusReducer),
   __reducerSchema("seed_dependency_rules", SeedDependencyRulesReducer),
@@ -197,6 +211,8 @@ const proceduresSchema = __procedures(
 
 type __SchemaWithTableAccessorAliases = Omit<typeof tablesSchema.schemaType, "tables"> & {
   tables: typeof tablesSchema.schemaType.tables & {
+    /** @deprecated Use `activeFault` instead. This alias will be removed in the next major version. */
+    readonly "active_fault": Omit<typeof tablesSchema.schemaType.tables["activeFault"], "accessorName"> & { readonly accessorName: "active_fault" };
     /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
     readonly "asset_profile": Omit<typeof tablesSchema.schemaType.tables["assetProfile"], "accessorName"> & { readonly accessorName: "asset_profile" };
     /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */
@@ -235,6 +251,7 @@ const REMOTE_MODULE = {
 >;
 
 const tableAccessorAliases = {
+  "active_fault": "activeFault",
   "asset_profile": "assetProfile",
   "cascade_assessment": "cascadeAssessment",
   "dependency_rule": "dependencyRule",
@@ -265,6 +282,8 @@ function __withTableAccessorAliases<T extends object>(target: T, freeze = false)
 
 type __DbViewBase = __DbConnectionImpl<typeof REMOTE_MODULE>["db"];
 export type DbView = __DbViewBase & {
+  /** @deprecated Use `activeFault` instead. This alias will be removed in the next major version. */
+  readonly "active_fault": __DbViewBase["activeFault"];
   /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
   readonly "asset_profile": __DbViewBase["assetProfile"];
   /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */
@@ -289,6 +308,8 @@ export type DbView = __DbViewBase & {
 
 type __TablesBase = __QueryBuilder<typeof tablesSchema.schemaType>;
 export type Tables = __TablesBase & {
+  /** @deprecated Use `activeFault` instead. This alias will be removed in the next major version. */
+  readonly "active_fault": __TablesBase["activeFault"];
   /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
   readonly "asset_profile": __TablesBase["assetProfile"];
   /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */

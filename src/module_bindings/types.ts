@@ -10,6 +10,18 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const ActiveFault = __t.object("ActiveFault", {
+  componentId: __t.string(),
+  incidentId: __t.string(),
+  workOrderId: __t.string(),
+  assessmentId: __t.string(),
+  status: __t.string(),
+  repeatCount: __t.f64(),
+  firstDetectedAt: __t.f64(),
+  lastDetectedAt: __t.f64(),
+});
+export type ActiveFault = __Infer<typeof ActiveFault>;
+
 export const AssetProfile = __t.object("AssetProfile", {
   componentId: __t.string(),
   domain: __t.string(),

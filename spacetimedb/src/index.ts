@@ -141,6 +141,23 @@ const db = schema({
   }),
 
 
+  
+  // ==========================================
+  // STEP 4: ACTIVE FAULT TRACKING
+  // ==========================================
+
+  active_fault: table({ public: true }, {
+    component_id: t.string().primaryKey(),
+    incident_id: t.string(),
+    work_order_id: t.string(),
+    assessment_id: t.string(),
+    status: t.string(),
+    repeat_count: t.number(),
+    first_detected_at: t.number(),
+    last_detected_at: t.number(),
+  }),
+
+
 });
 
 export default db;
@@ -716,3 +733,177 @@ export const analyzeCascade = db.reducer(
     );
   }
 );
+
+
+ // ==========================================
+ // STEP 4: AUTOMATED TELEMETRY RESPONSE
+ // ==========================================
+
+export const ingestDemoTelemetry = db.reducer(
+  {
+    reading_id: t.string(),
+    component_id: t.string(),
+    operational: t.number(),
+  },
+  (ctx, { reading_id, component_id, operational }) => {
+
+    // Validate incoming sample
+    if (!reading_id.trim()) {
+      throw new Error('Reading ID is required.');
+    }
+
+    if (operational !== 0 && operational !== 1) {
+      throw new Error('Operational must be 0 or 1.');
+    }
+
+    const profile =
+      ctx.db.asset_profile.component_id.find(component_id);
+
+    if (!profile || !component_id.startsWith('MS-')) {
+      throw new Error('Unknown multi-silo component.');
+    }
+
+    // Prevent duplicate telemetry ingestion
+    const duplicate =
+      ctx.db.telemetry_reading.reading_id.find(reading_id);
+
+    if (duplicate) {
+      console.info('Duplicate reading ignored.');
+      return;
+    }
+
+    const now = Date.now();
+    const isFault = operational === 0;
+
+    // Step 1: Store the measurement
+    
+  ctx.db.telemetry_reading.insert({
+    reading_id,
+    component_id,
+    metric_name: 'operational_status',
+    value: operational,
+    timestamp: now,
+  });
+
+
+    // Normal reading: no new incident.
+    // Existing incidents require separate resolution.
+    if (!isFault) {
+      console.info(`Normal reading: ${component_id}`);
+      return;
+    }
+
+    // Step 2: Detect repeated active faults
+    const existing =
+      ctx.db.active_fault.component_id.find(component_id);
+
+    if (existing?.status === 'OPEN') {
+      ctx.db.active_fault.component_id.update({
+        ...existing,
+        repeat_count: existing.repeat_count + 1,
+        last_detected_at: now,
+      });
+
+      console.info(
+        `Repeated fault for ${component_id}; ` +
+        'existing incident retained.'
+      );
+      return;
+    }
+
+    // Step 3: New incident identifiers
+    const incidentId = `AUTO-INC-${reading_id}`;
+    const orderId = `AUTO-WO-${reading_id}`;
+    const assessmentId = `AUTO-CASCADE-${reading_id}`;
+
+    // Step 4: Run the EXISTING cascade engine.
+    // This is a direct same-transaction reducer call.
+    analyzeCascade(ctx, {
+      root_component_id: component_id,
+      assessment_id: assessmentId,
+    });
+
+    const assessment =
+      ctx.db.cascade_assessment.assessment_id.find(
+        assessmentId
+      );
+
+    if (!assessment) {
+      throw new Error('Cascade assessment was not created.');
+    }
+
+    // Step 5: Record the detected incident
+    ctx.db.incident_log.insert({
+      log_id: incidentId,
+      component_id,
+      description:
+        `Synthetic equipment outage: ${profile.asset_name}. ` +
+        `${assessment.predicted_at_risk_count} assets at risk; ` +
+        `${assessment.affected_tenant_count} tenants potentially affected.`,
+      severity: 'Critical',
+      timestamp: now,
+    });
+
+    // Step 6: Create ONE operational response
+
+  ctx.db.work_order.insert({
+    order_id: orderId,
+    component_id,
+    description:
+      `Investigate ${profile.asset_name}. ` +
+      `Incident: ${incidentId}. ` +
+      `Predicted downstream assets: ` +
+      `${assessment.predicted_at_risk_count}. ` +
+      `Potential SLA exposure: ` +
+      `$${assessment.hourly_sla_exposure}/hr. ` +
+      `Verify equipment state and evaluate safe mitigation.`,
+    priority: 'Critical',
+    status: 'Open',
+  });
+
+
+    // Step 7: Record a cross-silo event
+    ctx.db.operational_event.insert({
+      event_id: `AUTO-EVENT-${reading_id}`,
+      facility_id: 'MS-DC-001',
+      component_id,
+      domain: profile.domain,
+      event_type: 'EQUIPMENT_UNAVAILABLE',
+      severity: 'CRITICAL',
+      description:
+        `Synthetic operational fault detected: ` +
+        profile.asset_name,
+      source: 'SYNTHETIC',
+      is_synthetic: true,
+      timestamp: now,
+    });
+
+    // Step 8: Track active incident
+    const faultState = {
+      component_id,
+      incident_id: incidentId,
+      work_order_id: orderId,
+      assessment_id: assessmentId,
+      status: 'OPEN',
+      repeat_count: 1,
+      first_detected_at: now,
+      last_detected_at: now,
+    };
+
+    if (existing) {
+      ctx.db.active_fault.component_id.update(faultState);
+    } else {
+      ctx.db.active_fault.insert(faultState);
+    }
+
+    console.info(
+      `Automatic response created: ${incidentId}; ` +
+      `${assessment.predicted_at_risk_count} assets at risk; ` +
+      `$${assessment.hourly_sla_exposure}/hr potential exposure.`
+    );
+  }
+);
+
+
+
+
