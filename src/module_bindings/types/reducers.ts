@@ -6,16 +6,22 @@
 import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AcknowledgeFaultReducer from "../acknowledge_fault_reducer";
 import AnalyzeCascadeReducer from "../analyze_cascade_reducer";
+import ApproveDemoMitigationReducer from "../approve_demo_mitigation_reducer";
 import IngestDemoTelemetryReducer from "../ingest_demo_telemetry_reducer";
 import LogIncidentReducer from "../log_incident_reducer";
+import ResolveDemoFaultReducer from "../resolve_demo_fault_reducer";
 import SeedDemoCampusReducer from "../seed_demo_campus_reducer";
 import SeedDependencyRulesReducer from "../seed_dependency_rules_reducer";
 import SeedMultiSiloCampusReducer from "../seed_multi_silo_campus_reducer";
 
+export type AcknowledgeFaultParams = __Infer<typeof AcknowledgeFaultReducer>;
 export type AnalyzeCascadeParams = __Infer<typeof AnalyzeCascadeReducer>;
+export type ApproveDemoMitigationParams = __Infer<typeof ApproveDemoMitigationReducer>;
 export type IngestDemoTelemetryParams = __Infer<typeof IngestDemoTelemetryReducer>;
 export type LogIncidentParams = __Infer<typeof LogIncidentReducer>;
+export type ResolveDemoFaultParams = __Infer<typeof ResolveDemoFaultReducer>;
 export type SeedDemoCampusParams = __Infer<typeof SeedDemoCampusReducer>;
 export type SeedDependencyRulesParams = __Infer<typeof SeedDependencyRulesReducer>;
 export type SeedMultiSiloCampusParams = __Infer<typeof SeedMultiSiloCampusReducer>;

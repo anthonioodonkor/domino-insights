@@ -34,9 +34,12 @@ import {
 } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AcknowledgeFaultReducer from "./acknowledge_fault_reducer";
 import AnalyzeCascadeReducer from "./analyze_cascade_reducer";
+import ApproveDemoMitigationReducer from "./approve_demo_mitigation_reducer";
 import IngestDemoTelemetryReducer from "./ingest_demo_telemetry_reducer";
 import LogIncidentReducer from "./log_incident_reducer";
+import ResolveDemoFaultReducer from "./resolve_demo_fault_reducer";
 import SeedDemoCampusReducer from "./seed_demo_campus_reducer";
 import SeedDependencyRulesReducer from "./seed_dependency_rules_reducer";
 import SeedMultiSiloCampusReducer from "./seed_multi_silo_campus_reducer";
@@ -50,6 +53,7 @@ import CascadeAssessmentRow from "./cascade_assessment_table";
 import DependencyRuleRow from "./dependency_rule_table";
 import FacilityRow from "./facility_table";
 import IncidentLogRow from "./incident_log_table";
+import IncidentResponseRow from "./incident_response_table";
 import OperationalEventRow from "./operational_event_table";
 import SystemComponentRow from "./system_component_table";
 import SystemDependencyRow from "./system_dependency_table";
@@ -127,6 +131,17 @@ const tablesSchema = __schema({
       { name: 'incident_log_log_id_key', constraint: 'unique', columns: ['logId'] },
     ],
   }, IncidentLogRow),
+  incidentResponse: __table({
+    name: 'incident_response',
+    indexes: [
+      { accessor: 'incident_id', name: 'incident_response_incident_id_idx_btree', algorithm: 'btree', columns: [
+        'incidentId',
+      ] },
+    ],
+    constraints: [
+      { name: 'incident_response_incident_id_key', constraint: 'unique', columns: ['incidentId'] },
+    ],
+  }, IncidentResponseRow),
   operationalEvent: __table({
     name: 'operational_event',
     indexes: [
@@ -197,9 +212,12 @@ const tablesSchema = __schema({
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
+  __reducerSchema("acknowledge_fault", AcknowledgeFaultReducer),
   __reducerSchema("analyze_cascade", AnalyzeCascadeReducer),
+  __reducerSchema("approve_demo_mitigation", ApproveDemoMitigationReducer),
   __reducerSchema("ingest_demo_telemetry", IngestDemoTelemetryReducer),
   __reducerSchema("log_incident", LogIncidentReducer),
+  __reducerSchema("resolve_demo_fault", ResolveDemoFaultReducer),
   __reducerSchema("seed_demo_campus", SeedDemoCampusReducer),
   __reducerSchema("seed_dependency_rules", SeedDependencyRulesReducer),
   __reducerSchema("seed_multi_silo_campus", SeedMultiSiloCampusReducer),
@@ -221,6 +239,8 @@ type __SchemaWithTableAccessorAliases = Omit<typeof tablesSchema.schemaType, "ta
     readonly "dependency_rule": Omit<typeof tablesSchema.schemaType.tables["dependencyRule"], "accessorName"> & { readonly accessorName: "dependency_rule" };
     /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
     readonly "incident_log": Omit<typeof tablesSchema.schemaType.tables["incidentLog"], "accessorName"> & { readonly accessorName: "incident_log" };
+    /** @deprecated Use `incidentResponse` instead. This alias will be removed in the next major version. */
+    readonly "incident_response": Omit<typeof tablesSchema.schemaType.tables["incidentResponse"], "accessorName"> & { readonly accessorName: "incident_response" };
     /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
     readonly "operational_event": Omit<typeof tablesSchema.schemaType.tables["operationalEvent"], "accessorName"> & { readonly accessorName: "operational_event" };
     /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
@@ -256,6 +276,7 @@ const tableAccessorAliases = {
   "cascade_assessment": "cascadeAssessment",
   "dependency_rule": "dependencyRule",
   "incident_log": "incidentLog",
+  "incident_response": "incidentResponse",
   "operational_event": "operationalEvent",
   "system_component": "systemComponent",
   "system_dependency": "systemDependency",
@@ -292,6 +313,8 @@ export type DbView = __DbViewBase & {
   readonly "dependency_rule": __DbViewBase["dependencyRule"];
   /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
   readonly "incident_log": __DbViewBase["incidentLog"];
+  /** @deprecated Use `incidentResponse` instead. This alias will be removed in the next major version. */
+  readonly "incident_response": __DbViewBase["incidentResponse"];
   /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
   readonly "operational_event": __DbViewBase["operationalEvent"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
@@ -318,6 +341,8 @@ export type Tables = __TablesBase & {
   readonly "dependency_rule": __TablesBase["dependencyRule"];
   /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
   readonly "incident_log": __TablesBase["incidentLog"];
+  /** @deprecated Use `incidentResponse` instead. This alias will be removed in the next major version. */
+  readonly "incident_response": __TablesBase["incidentResponse"];
   /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
   readonly "operational_event": __TablesBase["operationalEvent"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */

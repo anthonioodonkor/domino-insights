@@ -157,6 +157,33 @@ const db = schema({
     last_detected_at: t.number(),
   }),
 
+  
+  // ==========================================
+  // STEP 5: INCIDENT RESPONSE LIFECYCLE
+  // ==========================================
+
+  incident_response: table({ public: true }, {
+    incident_id: t.string().primaryKey(),
+    component_id: t.string(),
+
+    // ACKNOWLEDGED, APPROVED, RESOLVED
+    state: t.string(),
+
+    // Simulated mitigation description
+    action: t.string(),
+
+    acknowledged_by: t.string(),
+    approved_by: t.string(),
+    resolved_by: t.string(),
+
+    acknowledged_at: t.number(),
+    approved_at: t.number(),
+    resolved_at: t.number(),
+
+    recovery_reading_id: t.string(),
+  }),
+
+
 
 });
 
@@ -900,6 +927,291 @@ export const ingestDemoTelemetry = db.reducer(
       `Automatic response created: ${incidentId}; ` +
       `${assessment.predicted_at_risk_count} assets at risk; ` +
       `$${assessment.hourly_sla_exposure}/hr potential exposure.`
+    );
+  }
+);
+
+  
+ // ==========================================
+ // STEP 5: ACKNOWLEDGE ACTIVE INCIDENT
+ // ==========================================
+
+export const acknowledgeFault = db.reducer(
+  {
+    component_id: t.string(),
+    incident_id: t.string(),
+  },
+  (ctx, { component_id, incident_id }) => {
+
+    const fault =
+      ctx.db.active_fault.component_id.find(component_id);
+
+    if (
+      !fault ||
+      fault.incident_id !== incident_id ||
+      fault.status !== 'OPEN'
+    ) {
+      throw new Error('No matching open fault.');
+    }
+
+    const previous =
+      ctx.db.incident_response.incident_id.find(
+        incident_id
+      );
+
+    // Repeated acknowledgment does not overwrite progress.
+    if (previous) {
+      console.info('Incident already acknowledged.');
+      return;
+    }
+
+    const order =
+      ctx.db.work_order.order_id.find(
+        fault.work_order_id
+      );
+
+    if (!order) {
+      throw new Error('Related work order not found.');
+    }
+
+    ctx.db.incident_response.insert({
+      incident_id,
+      component_id,
+      state: 'ACKNOWLEDGED',
+      action: '',
+      acknowledged_by: ctx.sender.toHexString(),
+      approved_by: '',
+      resolved_by: '',
+      acknowledged_at: Date.now(),
+      approved_at: 0,
+      resolved_at: 0,
+      recovery_reading_id: '',
+    });
+
+    ctx.db.work_order.order_id.update({
+      ...order,
+      status: 'Acknowledged',
+    });
+
+    console.info(`Acknowledged: ${incident_id}`);
+  }
+);
+
+
+ // ==========================================
+ // STEP 5: APPROVE SIMULATED MITIGATION
+ // ==========================================
+
+export const approveDemoMitigation = db.reducer(
+  {
+    component_id: t.string(),
+    incident_id: t.string(),
+    action: t.string(),
+  },
+  (ctx, { component_id, incident_id, action }) => {
+
+    const allowedActions = [
+      'SIMULATED_POWER_FAILOVER',
+      'SIMULATED_COOLING_FAILOVER',
+      'SIMULATED_TECHNICIAN_DISPATCH',
+    ];
+
+    if (!allowedActions.includes(action)) {
+      throw new Error('Unsupported mitigation action.');
+    }
+
+    const fault =
+      ctx.db.active_fault.component_id.find(component_id);
+
+    if (
+      !fault ||
+      fault.incident_id !== incident_id ||
+      fault.status !== 'OPEN'
+    ) {
+      throw new Error('No matching open fault.');
+    }
+
+    const response =
+      ctx.db.incident_response.incident_id.find(
+        incident_id
+      );
+
+    if (!response) {
+      throw new Error('Acknowledge the incident first.');
+    }
+
+    if (
+      response.state !== 'ACKNOWLEDGED' &&
+      response.state !== 'APPROVED'
+    ) {
+      throw new Error('Invalid approval state.');
+    }
+
+    // Permit reapproval if a new fault was detected
+    // after the previous approval.
+    if (
+      response.state === 'APPROVED' &&
+      fault.last_detected_at <= response.approved_at
+    ) {
+      console.info('Mitigation already approved.');
+      return;
+    }
+
+    const order =
+      ctx.db.work_order.order_id.find(
+        fault.work_order_id
+      );
+
+    if (!order) {
+      throw new Error('Related work order not found.');
+    }
+
+    ctx.db.incident_response.incident_id.update({
+      ...response,
+      state: 'APPROVED',
+      action,
+      approved_by: ctx.sender.toHexString(),
+      approved_at: Date.now(),
+    });
+
+    ctx.db.work_order.order_id.update({
+      ...order,
+      status: 'Mitigation Approved',
+    });
+
+    // This is an audit record, not physical actuation.
+    console.info(
+      `Simulated mitigation approved: ${action}`
+    );
+  }
+);
+
+
+ // ==========================================
+ // STEP 5: VERIFY AND RESOLVE INCIDENT
+ // ==========================================
+
+export const resolveDemoFault = db.reducer(
+  {
+    component_id: t.string(),
+    incident_id: t.string(),
+  },
+  (ctx, { component_id, incident_id }) => {
+
+    const fault =
+      ctx.db.active_fault.component_id.find(component_id);
+
+    if (!fault || fault.incident_id !== incident_id) {
+      throw new Error('Incident does not match active fault.');
+    }
+
+    const response =
+      ctx.db.incident_response.incident_id.find(
+        incident_id
+      );
+
+    if (!response) {
+      throw new Error('Incident response not found.');
+    }
+
+    // Idempotent closure.
+    if (
+      fault.status === 'RESOLVED' &&
+      response.state === 'RESOLVED'
+    ) {
+      console.info('Incident already resolved.');
+      return;
+    }
+
+    if (
+      fault.status !== 'OPEN' ||
+      response.state !== 'APPROVED'
+    ) {
+      throw new Error('Mitigation approval required.');
+    }
+
+    if (fault.last_detected_at > response.approved_at) {
+      throw new Error(
+        'A newer fault occurred after approval. ' +
+        'Reapprove mitigation before resolving.'
+      );
+    }
+
+    // Find the most recent operational-status reading.
+    let latestReading:
+      | {
+          reading_id: string;
+          value: number;
+          timestamp: number;
+        }
+      | undefined;
+
+    for (const reading of ctx.db.telemetry_reading.iter()) {
+      if (
+        reading.component_id !== component_id ||
+        reading.metric_name !== 'operational_status'
+      ) {
+        continue;
+      }
+
+      if (
+        !latestReading ||
+        reading.timestamp > latestReading.timestamp
+      ) {
+        latestReading = reading;
+      }
+    }
+
+    const cutoff = Math.max(
+      response.approved_at,
+      fault.last_detected_at
+    );
+
+    if (
+      !latestReading ||
+      latestReading.value !== 1 ||
+      latestReading.timestamp <= cutoff
+    ) {
+      throw new Error(
+        'Fresh healthy telemetry required before closure.'
+      );
+    }
+
+    const order =
+      ctx.db.work_order.order_id.find(
+        fault.work_order_id
+      );
+
+    if (!order) {
+      throw new Error('Related work order not found.');
+    }
+
+    const now = Date.now();
+
+    // Close the current active fault.
+    ctx.db.active_fault.component_id.update({
+      ...fault,
+      status: 'RESOLVED',
+    });
+
+    // Close the existing work order.
+    ctx.db.work_order.order_id.update({
+      ...order,
+      status: 'Resolved',
+    });
+
+    // Preserve the complete approval/recovery record.
+    ctx.db.incident_response.incident_id.update({
+      ...response,
+      state: 'RESOLVED',
+      resolved_by: ctx.sender.toHexString(),
+      resolved_at: now,
+      recovery_reading_id: latestReading.reading_id,
+    });
+
+    console.info(
+      `Incident ${incident_id} resolved using ` +
+      latestReading.reading_id
     );
   }
 );

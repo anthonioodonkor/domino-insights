@@ -68,6 +68,21 @@ export const IncidentLog = __t.object("IncidentLog", {
 });
 export type IncidentLog = __Infer<typeof IncidentLog>;
 
+export const IncidentResponse = __t.object("IncidentResponse", {
+  incidentId: __t.string(),
+  componentId: __t.string(),
+  state: __t.string(),
+  action: __t.string(),
+  acknowledgedBy: __t.string(),
+  approvedBy: __t.string(),
+  resolvedBy: __t.string(),
+  acknowledgedAt: __t.f64(),
+  approvedAt: __t.f64(),
+  resolvedAt: __t.f64(),
+  recoveryReadingId: __t.string(),
+});
+export type IncidentResponse = __Infer<typeof IncidentResponse>;
+
 export const OperationalEvent = __t.object("OperationalEvent", {
   eventId: __t.string(),
   facilityId: __t.string(),
