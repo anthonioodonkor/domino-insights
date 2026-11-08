@@ -59,6 +59,88 @@ const db = schema({
     status: t.string(), // "Pending", "Resolved"
     priority: t.string(), // "Urgent", "Normal"
   }),
+
+  
+  // ==========================================
+  // MULTI-SILO ASSET CLASSIFICATION
+  // ==========================================
+
+  asset_profile: table({ public: true }, {
+    component_id: t.string().primaryKey(),
+
+    // HVAC, UTILITIES, ACCESS_CONTROL,
+    // FACILITIES
+    domain: t.string(),
+
+    asset_name: t.string(),
+    location: t.string(),
+
+    // LOW, MEDIUM, HIGH, CRITICAL
+    criticality: t.string(),
+  }),
+
+  // Operational event table
+
+  
+  // ==========================================
+  // CROSS-SILO OPERATIONAL EVENTS
+  // ==========================================
+
+  operational_event: table({ public: true }, {
+    event_id: t.string().primaryKey(),
+
+    facility_id: t.string(),
+    component_id: t.string(),
+
+    // HVAC, UTILITIES, ACCESS_CONTROL,
+    // FACILITIES
+    domain: t.string(),
+
+    // POWER_TRANSFER, READER_OFFLINE,
+    // EQUIPMENT_FAULT, ACCESS_DELAY, etc.
+    event_type: t.string(),
+
+    // INFO, WARNING, CRITICAL
+    severity: t.string(),
+
+    description: t.string(),
+
+    // SYNTHETIC, DATASET_REPLAY,
+    // EXTERNAL_API
+    source: t.string(),
+
+    is_synthetic: t.bool(),
+
+    // Unix milliseconds
+    timestamp: t.number(),
+  }), 
+
+  
+  // ==========================================
+  // STEP 3: DEPENDENCY SEMANTICS
+  // ==========================================
+
+  dependency_rule: table({ public: true }, {
+    dependency_id: t.string().primaryKey(),
+    relationship_type: t.string(),
+    requirement_group: t.string(),
+  }),
+
+  // Hypothetical cascade assessments.
+  // No physical device state is changed.
+  cascade_assessment: table({ public: true }, {
+    assessment_id: t.string().primaryKey(),
+    root_component_id: t.string(),
+    predicted_at_risk_json: t.string(),
+    predicted_at_risk_count: t.number(),
+    affected_tenant_ids_json: t.string(),
+    affected_tenant_count: t.number(),
+    hourly_sla_exposure: t.number(),
+    is_simulation: t.bool(),
+    timestamp: t.number(),
+  }),
+
+
 });
 
 export default db;
@@ -152,5 +234,485 @@ export const seedDemoCampus = db.reducer(
       dependent_component_id: "COMP-SRV-01",
       hourly_sla_penalty: 10000.0,
     });
+  }
+);
+
+
+ // ==========================================
+ // STEP 2: MULTI-SILO DEMO CAMPUS
+ // ==========================================
+
+export const seedMultiSiloCampus = db.reducer((ctx) => {
+  const campusId = 'MS-DC-001';
+
+  // Prevent duplicate seeding.
+  if (ctx.db.asset_profile.component_id.find('MS-GRID-1')) {
+    console.info('Multi-silo campus already seeded.');
+    return;
+  }
+
+  const now = Date.now();
+
+  // Create a separate fictional demo facility.
+  ctx.db.facility.insert({
+    facility_id: campusId,
+    name: 'Domino Multi-Silo Data Center',
+    location: 'Richardson, Texas',
+    overall_status: 'Normal',
+  });
+
+  // Format:
+  // ID, Domain, System Type, Name,
+  // Location, Criticality, Primary Dependency
+
+  const assets: [string, string, string, string, string, string, string][] = [
+
+    // 1. UTILITIES
+    ['MS-GRID-1', 'UTILITIES', 'Utility Feed',
+      'Primary Grid Supply', 'Electrical Yard', 'CRITICAL', ''],
+
+    ['MS-GEN-1', 'UTILITIES', 'Generator',
+      'Backup Generator', 'Generator Yard', 'CRITICAL', ''],
+
+    ['MS-ATS-1', 'UTILITIES', 'Transfer Switch',
+      'Automatic Transfer Switch', 'Electrical Room',
+      'CRITICAL', 'MS-GRID-1'],
+
+    ['MS-UPS-1', 'UTILITIES', 'UPS',
+      'Critical Power UPS', 'UPS Room',
+      'CRITICAL', 'MS-ATS-1'],
+
+    ['MS-PDU-1', 'UTILITIES', 'Power Distribution',
+      'Critical Controls PDU', 'Electrical Room',
+      'HIGH', 'MS-UPS-1'],
+
+    ['MS-METER-1', 'UTILITIES', 'Power Meter',
+      'Main Electrical Meter', 'Electrical Yard',
+      'MEDIUM', ''],
+
+    // 2. HVAC
+    ['MS-CHILLER-1', 'HVAC', 'Chiller',
+      'Primary Chiller', 'Mechanical Plant',
+      'CRITICAL', 'MS-ATS-1'],
+
+    ['MS-CHILLER-2', 'HVAC', 'Chiller',
+      'Backup Chiller', 'Mechanical Plant',
+      'CRITICAL', 'MS-ATS-1'],
+
+    ['MS-PUMP-1', 'HVAC', 'Cooling Pump',
+      'Chilled Water Pump', 'Mechanical Plant',
+      'CRITICAL', 'MS-ATS-1'],
+
+    ['MS-CRAH-1', 'HVAC', 'Air Handler',
+      'Server Hall A CRAH', 'Server Hall A',
+      'HIGH', 'MS-PUMP-1'],
+
+    ['MS-CRAH-2', 'HVAC', 'Air Handler',
+      'Server Hall B CRAH', 'Server Hall B',
+      'HIGH', 'MS-PUMP-1'],
+
+    ['MS-TEMP-1', 'HVAC', 'Temperature Sensor',
+      'Hall A Temperature Sensor', 'Server Hall A',
+      'MEDIUM', ''],
+
+    // 3. ACCESS CONTROL
+    ['MS-ACS-1', 'ACCESS_CONTROL', 'Access Controller',
+      'Security Door Controller', 'Security Room',
+      'HIGH', 'MS-UPS-1'],
+
+    ['MS-READER-1', 'ACCESS_CONTROL', 'Badge Reader',
+      'Maintenance Entrance Reader', 'Maintenance Entrance',
+      'HIGH', 'MS-ACS-1'],
+
+    ['MS-DOOR-1', 'ACCESS_CONTROL', 'Controlled Door',
+      'Maintenance Entrance Door', 'Maintenance Entrance',
+      'HIGH', 'MS-READER-1'],
+
+    // 4. FACILITIES MANAGEMENT
+    ['MS-BMS-1', 'FACILITIES', 'BMS Controller',
+      'Building Management Controller', 'Control Room',
+      'CRITICAL', 'MS-PDU-1'],
+
+    ['MS-FACP-1', 'FACILITIES', 'Fire Alarm Panel',
+      'Fire Alarm Control Panel', 'Safety Room',
+      'CRITICAL', ''],
+
+    ['MS-HALL-1', 'FACILITIES', 'Server Hall',
+      'Tenant Server Hall A', 'Server Hall A',
+      'CRITICAL', 'MS-CRAH-1'],
+
+    ['MS-HALL-2', 'FACILITIES', 'Server Hall',
+      'Tenant Server Hall B', 'Server Hall B',
+      'CRITICAL', 'MS-CRAH-2'],
+
+    ['MS-CMMS-1', 'FACILITIES', 'Maintenance System',
+      'Facilities Work Order System', 'Operations Center',
+      'MEDIUM', 'MS-PDU-1'],
+  ];
+
+  for (const [
+    id,
+    domain,
+    systemType,
+    name,
+    location,
+    criticality,
+    dependsOn,
+  ] of assets) {
+
+    ctx.db.system_component.insert({
+      component_id: id,
+      facility_id: campusId,
+      system_type: systemType,
+      dependency_id: dependsOn,
+      status: 'Healthy',
+    });
+
+    ctx.db.asset_profile.insert({
+      component_id: id,
+      domain,
+      asset_name: name,
+      location,
+      criticality,
+    });
+  }
+
+  // ==========================================
+  // CROSS-SILO DEPENDENCY GRAPH
+  // ==========================================
+
+  const edges: [string, string][] = [
+    ['MS-GRID-1', 'MS-ATS-1'],
+    ['MS-GEN-1', 'MS-ATS-1'],
+    ['MS-ATS-1', 'MS-UPS-1'],
+    ['MS-UPS-1', 'MS-PDU-1'],
+
+    ['MS-ATS-1', 'MS-CHILLER-1'],
+    ['MS-ATS-1', 'MS-CHILLER-2'],
+    ['MS-ATS-1', 'MS-PUMP-1'],
+
+    ['MS-CHILLER-1', 'MS-PUMP-1'],
+    ['MS-CHILLER-2', 'MS-PUMP-1'],
+    ['MS-PUMP-1', 'MS-CRAH-1'],
+    ['MS-PUMP-1', 'MS-CRAH-2'],
+    ['MS-CRAH-1', 'MS-HALL-1'],
+    ['MS-CRAH-2', 'MS-HALL-2'],
+
+    ['MS-UPS-1', 'MS-ACS-1'],
+    ['MS-ACS-1', 'MS-READER-1'],
+    ['MS-READER-1', 'MS-DOOR-1'],
+
+    ['MS-PDU-1', 'MS-BMS-1'],
+    ['MS-BMS-1', 'MS-CHILLER-1'],
+    ['MS-BMS-1', 'MS-CHILLER-2'],
+    ['MS-PDU-1', 'MS-CMMS-1'],
+  ];
+
+  edges.forEach(([parent, child], index) => {
+    ctx.db.system_dependency.insert({
+      dependency_id: `MS-DEP-${index + 1}`,
+      parent_component_id: parent,
+      child_component_id: child,
+    });
+  });
+
+  // ==========================================
+  // FICTIONAL TENANT CONTRACTS
+  // ==========================================
+
+  const tenants: [string, string, string, number][] = [
+    ['MS-TEN-A', 'Atlas Research (Demo)',
+      'MS-HALL-1', 10000],
+
+    ['MS-TEN-B', 'Beacon Analytics (Demo)',
+      'MS-HALL-1', 7000],
+
+    ['MS-TEN-C', 'Cedar Compute (Demo)',
+      'MS-HALL-2', 12000],
+  ];
+
+  for (const [
+    tenant_id,
+    tenant_name,
+    dependent_component_id,
+    hourly_sla_penalty,
+  ] of tenants) {
+
+  ctx.db.tenant_lease.insert({
+    tenant_id,
+    name: tenant_name,
+    dependent_component_id,
+    hourly_sla_penalty,
+  });
+
+  }
+
+  // ==========================================
+  // INITIAL OPERATIONAL EVENTS
+  // ==========================================
+
+  const events: [string, string, string, string][] = [
+    ['MS-GRID-1', 'UTILITIES',
+      'BASELINE_CHECK', 'Utility systems initialized'],
+
+    ['MS-CHILLER-1', 'HVAC',
+      'BASELINE_CHECK', 'Cooling systems initialized'],
+
+    ['MS-ACS-1', 'ACCESS_CONTROL',
+      'BASELINE_CHECK', 'Access control initialized'],
+
+    ['MS-BMS-1', 'FACILITIES',
+      'BASELINE_CHECK', 'Facilities systems initialized'],
+  ];
+
+  events.forEach(([component, domain, eventType, description], index) => {
+    ctx.db.operational_event.insert({
+      event_id: `MS-EVENT-${index + 1}`,
+      facility_id: campusId,
+      component_id: component,
+      domain,
+      event_type: eventType,
+      severity: 'INFO',
+      description,
+      source: 'SYNTHETIC',
+      is_synthetic: true,
+      timestamp: now,
+    });
+  });
+
+  console.info('Multi-silo campus seeded successfully.');
+
+  
+});
+
+
+export const seedDependencyRules = db.reducer((ctx) => {
+
+  let inserted = 0;
+
+  for (const edge of ctx.db.system_dependency.iter()) {
+    if (!edge.dependency_id.startsWith('MS-DEP-')) {
+      continue;
+    }
+
+    if (
+      ctx.db.dependency_rule.dependency_id.find(
+        edge.dependency_id
+      )
+    ) {
+      continue;
+    }
+
+    const parent = ctx.db.asset_profile.component_id.find(
+      edge.parent_component_id
+    );
+
+    if (!parent) {
+      throw new Error(
+        `Missing asset profile: ${edge.parent_component_id}`
+      );
+    }
+
+    let requirementGroup = edge.dependency_id;
+
+    // Grid and generator are alternative sources.
+    if (
+      edge.child_component_id === 'MS-ATS-1' &&
+      (
+        edge.parent_component_id === 'MS-GRID-1' ||
+        edge.parent_component_id === 'MS-GEN-1'
+      )
+    ) {
+      requirementGroup = 'MS-ATS-POWER-SOURCES';
+    }
+
+    // Both chillers provide alternative cooling supply.
+    if (
+      edge.child_component_id === 'MS-PUMP-1' &&
+      (
+        edge.parent_component_id === 'MS-CHILLER-1' ||
+        edge.parent_component_id === 'MS-CHILLER-2'
+      )
+    ) {
+      requirementGroup = 'MS-CHILLER-SUPPLY';
+    }
+
+    const relationshipType =
+      parent.domain === 'UTILITIES' ? 'POWER' :
+      parent.domain === 'HVAC' ? 'COOLING' :
+      parent.domain === 'ACCESS_CONTROL' ? 'ACCESS' :
+      'OPERATIONAL_CONTROL';
+
+    ctx.db.dependency_rule.insert({
+      dependency_id: edge.dependency_id,
+      relationship_type: relationshipType,
+      requirement_group: requirementGroup,
+    });
+
+    inserted++;
+  }
+
+  console.info(`Inserted ${inserted} dependency rules.`);
+});
+
+
+export const analyzeCascade = db.reducer(
+  {
+    root_component_id: t.string(),
+    assessment_id: t.string(),
+  },
+  (ctx, { root_component_id, assessment_id }) => {
+
+    // Restrict this demo to the multi-silo campus.
+    if (!root_component_id.startsWith('MS-')) {
+      throw new Error('Use an MS- campus component ID.');
+    }
+
+    if (!assessment_id.trim()) {
+      throw new Error('Assessment ID is required.');
+    }
+
+    const root = ctx.db.asset_profile.component_id.find(
+      root_component_id
+    );
+
+    if (!root) {
+      throw new Error(
+        `Unknown component: ${root_component_id}`
+      );
+    }
+
+    // Child -> requirement group -> source components.
+    const groupsByChild =
+      new Map<string, Map<string, string[]>>();
+
+    for (const edge of ctx.db.system_dependency.iter()) {
+      if (!edge.dependency_id.startsWith('MS-DEP-')) {
+        continue;
+      }
+
+      const rule = ctx.db.dependency_rule.dependency_id.find(
+        edge.dependency_id
+      );
+
+      if (!rule) {
+        throw new Error(
+          `Missing rule for ${edge.dependency_id}. ` +
+          'Run seed_dependency_rules first.'
+        );
+      }
+
+      let groups = groupsByChild.get(
+        edge.child_component_id
+      );
+
+      if (!groups) {
+        groups = new Map<string, string[]>();
+        groupsByChild.set(edge.child_component_id, groups);
+      }
+
+      const sources =
+        groups.get(rule.requirement_group) ?? [];
+
+      sources.push(edge.parent_component_id);
+
+      groups.set(rule.requirement_group, sources);
+    }
+
+    // The root is assumed failed.
+    // Downstream assets are PREDICTED at risk.
+    const impacted = new Set<string>([
+      root_component_id,
+    ]);
+
+    let changed = true;
+
+    // Monotonic fixed-point traversal:
+    // repeat until no additional assets become at risk.
+    while (changed) {
+      changed = false;
+
+      for (const [child, groups] of groupsByChild) {
+        if (impacted.has(child)) {
+          continue;
+        }
+
+        // Each group needs at least one available source.
+        // A child is at risk if ANY requirement group
+        // has lost ALL of its sources.
+        let requirementLost = false;
+
+        for (const sources of groups.values()) {
+          if (
+            sources.length > 0 &&
+            sources.every(source => impacted.has(source))
+          ) {
+            requirementLost = true;
+            break;
+          }
+        }
+
+        if (requirementLost) {
+          impacted.add(child);
+          changed = true;
+        }
+      }
+    }
+
+    const atRisk = [...impacted].filter(
+      id => id !== root_component_id
+    ).sort();
+
+    // Only tenants whose dependent assets are
+    // at risk contribute to potential exposure.
+    const affectedTenantIds: string[] = [];
+    let hourlyExposure = 0;
+
+    for (const tenant of ctx.db.tenant_lease.iter()) {
+      if (!tenant.tenant_id.startsWith('MS-TEN-')) {
+        continue;
+      }
+
+      if (impacted.has(tenant.dependent_component_id)) {
+        affectedTenantIds.push(tenant.tenant_id);
+        hourlyExposure += tenant.hourly_sla_penalty;
+      }
+    }
+
+    affectedTenantIds.sort();
+
+    const assessment = {
+      assessment_id,
+      root_component_id,
+      predicted_at_risk_json: JSON.stringify(atRisk),
+      predicted_at_risk_count: atRisk.length,
+      affected_tenant_ids_json:
+        JSON.stringify(affectedTenantIds),
+      affected_tenant_count: affectedTenantIds.length,
+      hourly_sla_exposure: hourlyExposure,
+      is_simulation: true,
+      timestamp: Date.now(),
+    };
+
+    // Reusing the same assessment ID replaces the snapshot.
+    const existing =
+      ctx.db.cascade_assessment.assessment_id.find(
+        assessment_id
+      );
+
+    if (existing) {
+      ctx.db.cascade_assessment.assessment_id.update(
+        assessment
+      );
+    } else {
+      ctx.db.cascade_assessment.insert(assessment);
+    }
+
+    console.info(
+      `Cascade ${assessment_id}: ` +
+      `${atRisk.length} downstream assets, ` +
+      `${affectedTenantIds.length} tenants, ` +
+      `$${hourlyExposure}/hr potential exposure`
+    );
   }
 );

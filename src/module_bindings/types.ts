@@ -10,6 +10,35 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const AssetProfile = __t.object("AssetProfile", {
+  componentId: __t.string(),
+  domain: __t.string(),
+  assetName: __t.string(),
+  location: __t.string(),
+  criticality: __t.string(),
+});
+export type AssetProfile = __Infer<typeof AssetProfile>;
+
+export const CascadeAssessment = __t.object("CascadeAssessment", {
+  assessmentId: __t.string(),
+  rootComponentId: __t.string(),
+  predictedAtRiskJson: __t.string(),
+  predictedAtRiskCount: __t.f64(),
+  affectedTenantIdsJson: __t.string(),
+  affectedTenantCount: __t.f64(),
+  hourlySlaExposure: __t.f64(),
+  isSimulation: __t.bool(),
+  timestamp: __t.f64(),
+});
+export type CascadeAssessment = __Infer<typeof CascadeAssessment>;
+
+export const DependencyRule = __t.object("DependencyRule", {
+  dependencyId: __t.string(),
+  relationshipType: __t.string(),
+  requirementGroup: __t.string(),
+});
+export type DependencyRule = __Infer<typeof DependencyRule>;
+
 export const Facility = __t.object("Facility", {
   facilityId: __t.string(),
   name: __t.string(),
@@ -26,6 +55,20 @@ export const IncidentLog = __t.object("IncidentLog", {
   timestamp: __t.f64(),
 });
 export type IncidentLog = __Infer<typeof IncidentLog>;
+
+export const OperationalEvent = __t.object("OperationalEvent", {
+  eventId: __t.string(),
+  facilityId: __t.string(),
+  componentId: __t.string(),
+  domain: __t.string(),
+  eventType: __t.string(),
+  severity: __t.string(),
+  description: __t.string(),
+  source: __t.string(),
+  isSynthetic: __t.bool(),
+  timestamp: __t.f64(),
+});
+export type OperationalEvent = __Infer<typeof OperationalEvent>;
 
 export const SystemComponent = __t.object("SystemComponent", {
   componentId: __t.string(),

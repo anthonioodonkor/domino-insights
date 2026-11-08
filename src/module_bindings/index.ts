@@ -34,14 +34,21 @@ import {
 } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AnalyzeCascadeReducer from "./analyze_cascade_reducer";
 import LogIncidentReducer from "./log_incident_reducer";
 import SeedDemoCampusReducer from "./seed_demo_campus_reducer";
+import SeedDependencyRulesReducer from "./seed_dependency_rules_reducer";
+import SeedMultiSiloCampusReducer from "./seed_multi_silo_campus_reducer";
 
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import AssetProfileRow from "./asset_profile_table";
+import CascadeAssessmentRow from "./cascade_assessment_table";
+import DependencyRuleRow from "./dependency_rule_table";
 import FacilityRow from "./facility_table";
 import IncidentLogRow from "./incident_log_table";
+import OperationalEventRow from "./operational_event_table";
 import SystemComponentRow from "./system_component_table";
 import SystemDependencyRow from "./system_dependency_table";
 import TelemetryReadingRow from "./telemetry_reading_table";
@@ -52,6 +59,39 @@ import WorkOrderRow from "./work_order_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  assetProfile: __table({
+    name: 'asset_profile',
+    indexes: [
+      { accessor: 'component_id', name: 'asset_profile_component_id_idx_btree', algorithm: 'btree', columns: [
+        'componentId',
+      ] },
+    ],
+    constraints: [
+      { name: 'asset_profile_component_id_key', constraint: 'unique', columns: ['componentId'] },
+    ],
+  }, AssetProfileRow),
+  cascadeAssessment: __table({
+    name: 'cascade_assessment',
+    indexes: [
+      { accessor: 'assessment_id', name: 'cascade_assessment_assessment_id_idx_btree', algorithm: 'btree', columns: [
+        'assessmentId',
+      ] },
+    ],
+    constraints: [
+      { name: 'cascade_assessment_assessment_id_key', constraint: 'unique', columns: ['assessmentId'] },
+    ],
+  }, CascadeAssessmentRow),
+  dependencyRule: __table({
+    name: 'dependency_rule',
+    indexes: [
+      { accessor: 'dependency_id', name: 'dependency_rule_dependency_id_idx_btree', algorithm: 'btree', columns: [
+        'dependencyId',
+      ] },
+    ],
+    constraints: [
+      { name: 'dependency_rule_dependency_id_key', constraint: 'unique', columns: ['dependencyId'] },
+    ],
+  }, DependencyRuleRow),
   facility: __table({
     name: 'facility',
     indexes: [
@@ -74,6 +114,17 @@ const tablesSchema = __schema({
       { name: 'incident_log_log_id_key', constraint: 'unique', columns: ['logId'] },
     ],
   }, IncidentLogRow),
+  operationalEvent: __table({
+    name: 'operational_event',
+    indexes: [
+      { accessor: 'event_id', name: 'operational_event_event_id_idx_btree', algorithm: 'btree', columns: [
+        'eventId',
+      ] },
+    ],
+    constraints: [
+      { name: 'operational_event_event_id_key', constraint: 'unique', columns: ['eventId'] },
+    ],
+  }, OperationalEventRow),
   systemComponent: __table({
     name: 'system_component',
     indexes: [
@@ -133,8 +184,11 @@ const tablesSchema = __schema({
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
+  __reducerSchema("analyze_cascade", AnalyzeCascadeReducer),
   __reducerSchema("log_incident", LogIncidentReducer),
   __reducerSchema("seed_demo_campus", SeedDemoCampusReducer),
+  __reducerSchema("seed_dependency_rules", SeedDependencyRulesReducer),
+  __reducerSchema("seed_multi_silo_campus", SeedMultiSiloCampusReducer),
 );
 
 /** The schema information for all procedures in this module. This is defined the same way as the procedures would have been defined in the server. */
@@ -143,8 +197,16 @@ const proceduresSchema = __procedures(
 
 type __SchemaWithTableAccessorAliases = Omit<typeof tablesSchema.schemaType, "tables"> & {
   tables: typeof tablesSchema.schemaType.tables & {
+    /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
+    readonly "asset_profile": Omit<typeof tablesSchema.schemaType.tables["assetProfile"], "accessorName"> & { readonly accessorName: "asset_profile" };
+    /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */
+    readonly "cascade_assessment": Omit<typeof tablesSchema.schemaType.tables["cascadeAssessment"], "accessorName"> & { readonly accessorName: "cascade_assessment" };
+    /** @deprecated Use `dependencyRule` instead. This alias will be removed in the next major version. */
+    readonly "dependency_rule": Omit<typeof tablesSchema.schemaType.tables["dependencyRule"], "accessorName"> & { readonly accessorName: "dependency_rule" };
     /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
     readonly "incident_log": Omit<typeof tablesSchema.schemaType.tables["incidentLog"], "accessorName"> & { readonly accessorName: "incident_log" };
+    /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
+    readonly "operational_event": Omit<typeof tablesSchema.schemaType.tables["operationalEvent"], "accessorName"> & { readonly accessorName: "operational_event" };
     /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
     readonly "system_component": Omit<typeof tablesSchema.schemaType.tables["systemComponent"], "accessorName"> & { readonly accessorName: "system_component" };
     /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */
@@ -173,7 +235,11 @@ const REMOTE_MODULE = {
 >;
 
 const tableAccessorAliases = {
+  "asset_profile": "assetProfile",
+  "cascade_assessment": "cascadeAssessment",
+  "dependency_rule": "dependencyRule",
   "incident_log": "incidentLog",
+  "operational_event": "operationalEvent",
   "system_component": "systemComponent",
   "system_dependency": "systemDependency",
   "telemetry_reading": "telemetryReading",
@@ -199,8 +265,16 @@ function __withTableAccessorAliases<T extends object>(target: T, freeze = false)
 
 type __DbViewBase = __DbConnectionImpl<typeof REMOTE_MODULE>["db"];
 export type DbView = __DbViewBase & {
+  /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
+  readonly "asset_profile": __DbViewBase["assetProfile"];
+  /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */
+  readonly "cascade_assessment": __DbViewBase["cascadeAssessment"];
+  /** @deprecated Use `dependencyRule` instead. This alias will be removed in the next major version. */
+  readonly "dependency_rule": __DbViewBase["dependencyRule"];
   /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
   readonly "incident_log": __DbViewBase["incidentLog"];
+  /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
+  readonly "operational_event": __DbViewBase["operationalEvent"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
   readonly "system_component": __DbViewBase["systemComponent"];
   /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */
@@ -215,8 +289,16 @@ export type DbView = __DbViewBase & {
 
 type __TablesBase = __QueryBuilder<typeof tablesSchema.schemaType>;
 export type Tables = __TablesBase & {
+  /** @deprecated Use `assetProfile` instead. This alias will be removed in the next major version. */
+  readonly "asset_profile": __TablesBase["assetProfile"];
+  /** @deprecated Use `cascadeAssessment` instead. This alias will be removed in the next major version. */
+  readonly "cascade_assessment": __TablesBase["cascadeAssessment"];
+  /** @deprecated Use `dependencyRule` instead. This alias will be removed in the next major version. */
+  readonly "dependency_rule": __TablesBase["dependencyRule"];
   /** @deprecated Use `incidentLog` instead. This alias will be removed in the next major version. */
   readonly "incident_log": __TablesBase["incidentLog"];
+  /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
+  readonly "operational_event": __TablesBase["operationalEvent"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
   readonly "system_component": __TablesBase["systemComponent"];
   /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */
