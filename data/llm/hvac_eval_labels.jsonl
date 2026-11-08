@@ -1,0 +1,8 @@
+{"example_id":"LBNL-2E91-W01","sequence_id":"LBNL-2E91","split":"eval","fault_class":"chiller_1_leaving_water_temperature_sensor_bias","sensor_bias_delta_c":-2}
+{"example_id":"LBNL-2E91-W02","sequence_id":"LBNL-2E91","split":"eval","fault_class":"chiller_1_leaving_water_temperature_sensor_bias","sensor_bias_delta_c":-2}
+{"example_id":"LBNL-2E91-W03","sequence_id":"LBNL-2E91","split":"eval","fault_class":"chiller_1_leaving_water_temperature_sensor_bias","sensor_bias_delta_c":-2}
+{"example_id":"LBNL-2E91-W04","sequence_id":"LBNL-2E91","split":"eval","fault_class":"chiller_1_leaving_water_temperature_sensor_bias","sensor_bias_delta_c":-2}
+{"example_id":"LBNL-7C4A-W01","sequence_id":"LBNL-7C4A","split":"eval","fault_class":"fault_free","sensor_bias_delta_c":null}
+{"example_id":"LBNL-7C4A-W02","sequence_id":"LBNL-7C4A","split":"eval","fault_class":"fault_free","sensor_bias_delta_c":null}
+{"example_id":"LBNL-7C4A-W03","sequence_id":"LBNL-7C4A","split":"eval","fault_class":"fault_free","sensor_bias_delta_c":null}
+{"example_id":"LBNL-7C4A-W04","sequence_id":"LBNL-7C4A","split":"eval","fault_class":"fault_free","sensor_bias_delta_c":null}

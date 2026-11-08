@@ -1,0 +1,4 @@
+tenant_id,tenant_name,service_component_id,threshold_c,grace_minutes,rate_cents_per_hour,currency,source_kind
+TEN-01,Cobalt Finch Compute,COMP-HALL-01,27,3,60000,USD,synthetic
+TEN-02,Juniper Stack Labs,COMP-HALL-01,29,2,30000,USD,synthetic
+TEN-03,Aster Paper Studio,COMP-OFC-01,28,3,12000,USD,synthetic

@@ -1,0 +1,197 @@
+[
+  {
+    "event_id": "EV-01",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228400000,
+    "component_id": "COMP-HALL-01",
+    "silo": "hvac",
+    "event_type": "baseline_checked",
+    "source_kind": "synthetic",
+    "details": {}
+  },
+  {
+    "event_id": "EV-02",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228580000,
+    "component_id": "COMP-CH-01",
+    "silo": "hvac",
+    "event_type": "cooling_degradation_started",
+    "source_kind": "synthetic",
+    "details": {}
+  },
+  {
+    "event_id": "EV-03",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228700000,
+    "component_id": "COMP-AHU-01",
+    "silo": "hvac",
+    "event_type": "cooling_capacity_degraded",
+    "source_kind": "synthetic",
+    "details": {
+      "upstream_event_id": "EV-02"
+    }
+  },
+  {
+    "event_id": "EV-04",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228760000,
+    "component_id": "COMP-DSP-01",
+    "silo": "facilities",
+    "event_type": "work_order_assigned",
+    "source_kind": "synthetic",
+    "details": {
+      "work_order_id": "WO-01",
+      "technician_id": "TECH-01",
+      "assigned_to_asset_id": "COMP-CH-01",
+      "upstream_event_id": "EV-03"
+    }
+  },
+  {
+    "event_id": "EV-05",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228820000,
+    "component_id": "COMP-DR-01",
+    "silo": "access_control",
+    "event_type": "controller_unavailable",
+    "source_kind": "synthetic",
+    "details": {
+      "cause": "independent_maintenance_link_fault"
+    }
+  },
+  {
+    "event_id": "EV-06",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228880000,
+    "component_id": "COMP-BR-01",
+    "silo": "access_control",
+    "event_type": "maintenance_access_check_failed",
+    "source_kind": "synthetic",
+    "details": {
+      "fabricated_badge_id": "DEMO-BADGE-01",
+      "work_order_id": "WO-01",
+      "upstream_event_id": "EV-05"
+    }
+  },
+  {
+    "event_id": "EV-07",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228880000,
+    "component_id": "COMP-HALL-01",
+    "silo": "lease_contracts",
+    "event_type": "tenant_at_risk",
+    "source_kind": "synthetic",
+    "details": {
+      "tenant_ids": [
+        "TEN-01",
+        "TEN-02"
+      ],
+      "threshold_exceeded_tenant_ids": [
+        "TEN-01"
+      ]
+    }
+  },
+  {
+    "event_id": "EV-08",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784228940000,
+    "component_id": "COMP-BR-02",
+    "silo": "access_control",
+    "event_type": "escorted_entry_authorized",
+    "source_kind": "synthetic",
+    "details": {
+      "fabricated_badge_id": "DEMO-BADGE-01",
+      "work_order_id": "WO-01",
+      "upstream_event_id": "EV-06"
+    }
+  },
+  {
+    "event_id": "EV-09",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229000000,
+    "component_id": "COMP-DSP-01",
+    "silo": "facilities",
+    "event_type": "work_order_on_site",
+    "source_kind": "synthetic",
+    "details": {
+      "work_order_id": "WO-01",
+      "technician_id": "TECH-01",
+      "elapsed_since_assignment_minutes": 4,
+      "upstream_event_id": "EV-08"
+    }
+  },
+  {
+    "event_id": "EV-10",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229060000,
+    "component_id": "COMP-CH-02",
+    "silo": "hvac",
+    "event_type": "backup_cooling_approved_and_started",
+    "source_kind": "synthetic",
+    "details": {
+      "operator_id": "DEMO-OP-01",
+      "pump_component_id": "COMP-PMP-02",
+      "upstream_event_id": "EV-09"
+    }
+  },
+  {
+    "event_id": "EV-11",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229060000,
+    "component_id": "COMP-PNL-01",
+    "silo": "utilities",
+    "event_type": "load_increased_after_backup_start",
+    "source_kind": "synthetic",
+    "details": {
+      "upstream_event_id": "EV-10"
+    }
+  },
+  {
+    "event_id": "EV-12",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229240000,
+    "component_id": "COMP-HALL-01",
+    "silo": "lease_contracts",
+    "event_type": "threshold_excursion_ended",
+    "source_kind": "synthetic",
+    "details": {
+      "tenant_ids": [
+        "TEN-01"
+      ]
+    }
+  },
+  {
+    "event_id": "EV-13",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229420000,
+    "component_id": "COMP-DR-01",
+    "silo": "access_control",
+    "event_type": "controller_restored",
+    "source_kind": "synthetic",
+    "details": {}
+  },
+  {
+    "event_id": "EV-14",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229540000,
+    "component_id": "COMP-HALL-01",
+    "silo": "hvac",
+    "event_type": "recovery_verified",
+    "source_kind": "synthetic",
+    "details": {
+      "upstream_event_id": "EV-10"
+    }
+  },
+  {
+    "event_id": "EV-15",
+    "scenario_id": "SC-COOL-01",
+    "timestamp": 1784229540000,
+    "component_id": "COMP-DSP-01",
+    "silo": "facilities",
+    "event_type": "work_order_resolved",
+    "source_kind": "synthetic",
+    "details": {
+      "work_order_id": "WO-01",
+      "upstream_event_id": "EV-14"
+    }
+  }
+]

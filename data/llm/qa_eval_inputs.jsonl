@@ -1,0 +1,5 @@
+{"example_id":"QA-01","split":"eval","question":"Why did the primary maintenance entry check fail, and what authorized route was used?","evidence_doc_ids":["EV-05","EV-06","EV-08"]}
+{"example_id":"QA-02","split":"eval","question":"How much illustrative SLA exposure did TEN-01 incur over the completed cooling replay?","evidence_doc_ids":["TEN-01","TS-COMP-HALL-01"]}
+{"example_id":"QA-03","split":"eval","question":"What caused the load increase at the plant electrical panel in the cooling replay?","evidence_doc_ids":["EV-10","EV-11"]}
+{"example_id":"QA-04","split":"eval","question":"What outdoor temperature does the supplied Dallas snapshot give, and what kind of source produced it?","evidence_doc_ids":["WX-DALLAS-01"]}
+{"example_id":"QA-05","split":"eval","question":"What were the documented facilities response time and final work-order status?","evidence_doc_ids":["EV-04","EV-09","EV-15"]}
