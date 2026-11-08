@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "source_id": "lbnl_chiller_plant",
+  "source_url": "https://doi.org/10.25984/1881324",
+  "source_kind": "research_simulation",
+  "license": "CC BY 4.0",
+  "sample_interval_seconds": 60,
+  "component_crosswalk": {
+    "COMP-CH-01": "LBNL simulated Chiller 1"
+  },
+  "timestamp": {
+    "source_column": "Datetime",
+    "source_format": "YYYY-MM-DD HH:MM:SS",
+    "assumed_offset": "-06:00",
+    "output": "UTC Unix milliseconds"
+  },
+  "metrics": {
+    "chilled_water_supply_temp_c": {
+      "source_column": "CHL_SW_TEMP_1",
+      "source_unit": "degF",
+      "unit": "Cel",
+      "conversion": "(x - 32) * 5 / 9"
+    },
+    "chilled_water_return_temp_c": {
+      "source_column": "CHL_RW_TEMP_1",
+      "source_unit": "degF",
+      "unit": "Cel",
+      "conversion": "(x - 32) * 5 / 9"
+    },
+    "chiller_power_kw": {
+      "source_column": "CHL_POW_1",
+      "source_unit": "kW",
+      "unit": "kW",
+      "conversion": "identity"
+    },
+    "chiller_on": {
+      "source_column": "CHL_STA_1",
+      "source_unit": "0/1",
+      "unit": "1",
+      "conversion": "identity"
+    }
+  }
+}
