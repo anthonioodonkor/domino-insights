@@ -1,0 +1,66 @@
+﻿import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { chromium } from 'playwright';
+
+const url = process.env.DOMINO_URL || 'http://127.0.0.1:5173';
+const chrome = process.env.CHROME_EXECUTABLE || (process.platform === 'win32' && existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe') ? 'C:/Program Files/Google/Chrome/Application/chrome.exe' : undefined);
+const browser = await chromium.launch({ headless: true, ...(chrome ? { executablePath: chrome } : {}) });
+const errors = [];
+const backendRequests = [];
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('request', request => {
+    const address = new URL(request.url());
+    if (address.protocol.startsWith('http') && address.origin !== new URL(url).origin) backendRequests.push(request.url());
+  });
+  page.on('websocket', socket => {
+    if (new URL(socket.url()).host !== new URL(url).host) backendRequests.push(socket.url());
+  });
+  await page.goto(url);
+  await page.getByText('Local preview', { exact: true }).waitFor();
+  await page.getByText('Preview manager', { exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Explore current occupancy', exact: true }).click();
+  await page.getByRole('heading', { name: 'Occupancy by zone', exact: true }).waitFor();
+  assert.equal(await page.locator('#portfolio-occupancy tbody tr').count(), 5);
+  await page.getByRole('button', { name: 'Office Tower A', exact: true }).first().click();
+  await page.locator('.react-flow').waitFor();
+  await page.getByRole('button', { name: 'Domino home', exact: true }).click();
+  await page.getByRole('button', { name: 'Inject chiller scenario', exact: true }).click();
+  await page.locator('.priority-row').first().click();
+  await page.getByRole('button', { name: 'Acknowledge incident', exact: true }).click();
+  await page.getByRole('button', { name: 'Prepare response', exact: true }).click();
+  await page.getByLabel('Response plan', { exact: true }).fill('Preview temporary cooling');
+  await page.getByRole('tab', { name: 'Telemetry', exact: true }).click();
+  await page.getByRole('heading', { name: 'Telemetry evidence', exact: true }).waitFor();
+  await page.getByRole('tab', { name: 'Response', exact: true }).click();
+  assert.equal(await page.getByLabel('Response plan', { exact: true }).inputValue(), 'Preview temporary cooling');
+  assert.equal(await page.locator('.assumptions-disclosure').getAttribute('open'), null);
+  await page.getByRole('combobox').selectOption('preview-engineer');
+  await page.getByRole('button', { name: 'Update assignment', exact: true }).click();
+  await page.getByRole('button', { name: 'Submit for review', exact: true }).click();
+  await page.getByRole('button', { name: 'Reject', exact: true }).click();
+  await page.getByRole('heading', { name: 'Revise the response plan', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Submit for review', exact: true }).click();
+  await page.getByRole('button', { name: 'Approve simulated response', exact: true }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile horizontal overflow');
+  await page.getByRole('button', { name: 'Resolve simulation', exact: true }).click();
+  await page.getByRole('heading', { name: 'Response complete', exact: true }).waitFor();
+  const independent = await browser.newPage();
+  await independent.goto(url);
+  await independent.getByRole('heading', { name: 'No active incidents', exact: true }).waitFor();
+  await page.reload();
+  await page.getByRole('heading', { name: 'Incident unavailable', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Domino home', exact: true }).click();
+  await page.getByRole('heading', { name: 'No active incidents', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Inject chiller scenario', exact: true }).click();
+  await page.locator('.priority-row').first().waitFor();
+  await page.locator('.demo-menu summary').click();
+  await page.getByRole('button', { name: /Reset demo/ }).click();
+  await page.getByRole('button', { name: 'Confirm reset', exact: true }).click();
+  await page.getByRole('heading', { name: 'No active incidents', exact: true }).waitFor();
+  assert.deepEqual(errors, []);
+  assert.deepEqual(backendRequests, []);
+  console.log('PASS: frontend runs without backend requests; dashboard, graph, tabs, drafts, assignment, proposals, approval, resolution, reload/reset, tab isolation, and mobile layout work.');
+} finally { await browser.close(); }
