@@ -12,6 +12,28 @@
     "source_column": "Datetime",
     "source_format": "YYYY-MM-DD HH:MM:SS",
     "assumed_offset": "-06:00",
+    "verification_status": "unverified",
+    "interpretation": "fixed_standard_time",
+    "daylight_saving_adjustment_applied": false,
+    "reviewed_on": "2026-11-08",
+    "decision": "Retain fixed UTC-06:00. EnergyPlus output reporting uses standard time, but the LBNL EnergyPlus-Modelica CSV Datetime export convention has not been verified. Do not infer civil time from the July sample.",
+    "evidence": [
+      {
+        "url": "https://energyplus.net/assets/nrel_custom/pdfs/pdfs_v22.1.0/InputOutputReference.pdf",
+        "section": "1.7.9 RunPeriodControl:DaylightSavingTime",
+        "finding": "Output:Variable and Output:Meter timestamps use standard time; daylight saving shifts schedules and controls, not reported timestamps.",
+        "scope": "EnergyPlus reporting generally; not proof of this co-simulation CSV export"
+      },
+      {
+        "url": "https://faultdetection.lbl.gov/dataset/simulated-chiller-plant/",
+        "finding": "Chicago EnergyPlus-Modelica simulation at one-minute sampling; no explicit Datetime timezone convention."
+      },
+      {
+        "url": "https://fdddata.lbl.gov/data/Simulated_LBNL_FDD_Data_Sets_Chiller_Plant/LBNL_FDD_Data_Sets_Chiller_Plant.pdf",
+        "finding": "September 2022 inventory documents points and cases, but no UTC offset or daylight-saving export policy was found."
+      }
+    ],
+    "verification_required": "Dataset-specific model clock configuration and Datetime export code, or explicit confirmation from the dataset authors.",
     "output": "UTC Unix milliseconds"
   },
   "metrics": {

@@ -27,6 +27,13 @@ METRICS = (
 FIELDS = ("reading_id", "component_id", "metric_name", "value", "timestamp")
 
 
+def source_datetime_to_utc_ms(value):
+    """Apply the unverified fixed standard-time policy, independent of host TZ."""
+    if value.tzinfo is not None:
+        raise ValueError("Expected timezone-naive source Datetime")
+    return int(value.replace(tzinfo=SOURCE_ZONE).timestamp()) * 1000
+
+
 def write_json(path, payload):
     path.write_text(json.dumps(payload, indent=2, allow_nan=False, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -40,6 +47,13 @@ def write_csv(path, fields, rows):
 
 def normalize(archive_path):
     data = ROOT / "data" / "processed"
+    # Preserve the reviewed policy and citations when reproducing the extract.
+    # Fail before writing anything if the policy no longer matches this converter.
+    timestamp_policy = json.loads((data / "hvac_provenance.json").read_text(encoding="utf-8"))["timestamp"]
+    if (timestamp_policy["assumed_offset"] != "-06:00" or
+            timestamp_policy["interpretation"] != "fixed_standard_time" or
+            timestamp_policy["daylight_saving_adjustment_applied"] is not False):
+        raise ValueError("Timestamp policy changed; review the conversion before regenerating")
     data.mkdir(parents=True, exist_ok=True)
     annotations = []
     readings = []
@@ -61,7 +75,7 @@ def normalize(archive_path):
                     if time != START + timedelta(minutes=len(source_times)):
                         raise ValueError(f"{member}: gap or duplicate at {time}")
                     source_times.append(time)
-                    timestamp = int(time.replace(tzinfo=SOURCE_ZONE).timestamp()) * 1000
+                    timestamp = source_datetime_to_utc_ms(time)
                     for column, name, original_unit, _ in METRICS:
                         value = float(row[column])
                         if not math.isfinite(value):
@@ -96,10 +110,7 @@ def normalize(archive_path):
         "schema_version": "1.0", "source_id": "lbnl_chiller_plant", "source_url": SOURCE_URL,
         "source_kind": "research_simulation", "license": "CC BY 4.0", "sample_interval_seconds": 60,
         "component_crosswalk": {"COMP-CH-01": "LBNL simulated Chiller 1"},
-        "timestamp": {
-            "source_column": "Datetime", "source_format": "YYYY-MM-DD HH:MM:SS",
-            "assumed_offset": "-06:00", "output": "UTC Unix milliseconds",
-        },
+        "timestamp": timestamp_policy,
         "metrics": {
             name: {
                 "source_column": column, "source_unit": original, "unit": unit,
