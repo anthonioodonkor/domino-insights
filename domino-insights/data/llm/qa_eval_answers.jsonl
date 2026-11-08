@@ -1,0 +1,5 @@
+{"example_id":"QA-01","split":"eval","expected_answer":"The primary controller was unavailable due to a separate maintenance-link fault. Escorted entry was authorized via alternate reader COMP-BR-02."}
+{"example_id":"QA-02","split":"eval","expected_answer":"USD 30.00. Six consecutive one-minute samples exceeded 27 °C. Three were billable after the three-minute grace period at USD 10 per minute."}
+{"example_id":"QA-03","split":"eval","expected_answer":"Operator-approved startup of the standby cooling system increased plant panel demand."}
+{"example_id":"QA-04","split":"eval","expected_answer":"16.9 °C from an Open-Meteo weather-model estimate."}
+{"example_id":"QA-05","split":"eval","expected_answer":"The technician arrived four minutes after assignment, and work order WO-01 was resolved."}

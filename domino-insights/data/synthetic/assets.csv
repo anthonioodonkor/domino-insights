@@ -1,0 +1,18 @@
+component_id,silo,asset_type,name,source_kind
+COMP-CH-01,hvac,chiller,Primary chiller,synthetic
+COMP-CH-02,hvac,chiller,Standby chiller,synthetic
+COMP-AHU-01,hvac,air_handler,Server hall air handler,synthetic
+COMP-AHU-02,hvac,air_handler,Office air handler,synthetic
+COMP-PMP-01,hvac,cooling_pump,Primary chilled-water pump,synthetic
+COMP-PMP-02,hvac,cooling_pump,Standby chilled-water pump,synthetic
+COMP-UPS-01,utilities,ups,Server hall UPS,synthetic
+COMP-PNL-01,utilities,electrical_panel,Plant electrical panel,synthetic
+COMP-PNL-02,utilities,electrical_panel,Critical loads electrical panel,synthetic
+COMP-GEN-01,utilities,generator,Standby generator,synthetic
+COMP-DR-01,access_control,door_controller,Primary plant access controller,synthetic
+COMP-DR-02,access_control,door_controller,Escorted plant access controller,synthetic
+COMP-BR-01,access_control,badge_reader,Primary plant badge reader,synthetic
+COMP-BR-02,access_control,badge_reader,Alternate plant badge reader,synthetic
+COMP-DSP-01,facilities,dispatch_service,Facilities dispatch,synthetic
+COMP-HALL-01,hvac,conditioned_space,Server hall,synthetic
+COMP-OFC-01,hvac,conditioned_space,Office floor,synthetic

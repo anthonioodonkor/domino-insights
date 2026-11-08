@@ -1,0 +1,1863 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "SC-COOL-01",
+  "source_kind": "synthetic",
+  "timestamp_start": 1784228400000,
+  "sample_interval_seconds": 60,
+  "phases": [
+    {
+      "phase": "normal",
+      "start_minute": 0,
+      "end_minute_exclusive": 3
+    },
+    {
+      "phase": "fault",
+      "start_minute": 3,
+      "end_minute_exclusive": 11
+    },
+    {
+      "phase": "recovery",
+      "start_minute": 11,
+      "end_minute_exclusive": 20
+    }
+  ],
+  "telemetry": [
+    {
+      "reading_id": "SC-COOL-01-00-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.7,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 62.0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 141.0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 410.0,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-00-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228400000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.7,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 62.0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 141.0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.1,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 410.0,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 481,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-01-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228460000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.1,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 12.25,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.8,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 62.65,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 141.5,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.1,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 410.5,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-02-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228520000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.6,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 12.64,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 7.5,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 67.2,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 145.0,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.3,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 414.0,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 479,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-03-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228580000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 17.2,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 13.13,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 8.4,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 73.05,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 149.5,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.7,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 418.5,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-04-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228640000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 18.1,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 13.79,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 9.6,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 80.85,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 155.5,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 24.5,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 424.5,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 481,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-05-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228700000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 18.9,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 14.34,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 10.6,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 87.35,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 160.5,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 25.6,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 429.5,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-06-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228760000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 19.8,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 14.84,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 11.5,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 93.2,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 165.0,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 26.5,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 434.0,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 479,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-07-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228820000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 20.6,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.17,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.1,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 97.1,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 168.0,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 27.2,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 437.0,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-08-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228880000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 21.1,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.39,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.5,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 99.7,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 170.0,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 27.9,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 439.0,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 481,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-09-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784228940000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 21.5,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.61,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.9,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 172.0,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.2,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 0,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 28.5,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 441.0,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-10-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229000000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 19.8,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.66,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 13.0,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 172.5,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 8.2,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 28.8,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 565.5,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 479,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-11-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229060000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 18.4,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.72,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 13.1,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 173.0,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 7.2,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 28.4,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 566.0,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-12-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229120000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 17.2,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.66,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 13.0,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 172.5,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 27.7,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 565.5,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 481,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-13-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229180000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.6,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.61,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.9,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 172.0,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 26.9,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 565.0,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-14-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229240000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.2,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.55,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.8,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 171.5,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 25.9,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 564.5,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 479,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-15-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229300000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.1,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.55,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.8,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 171.5,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 24.7,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 564.5,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-16-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229360000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.0,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.5,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.7,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 171.0,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 24.0,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.6,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 564.0,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 481,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-17-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229420000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.0,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.5,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.7,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 171.0,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.4,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 564.0,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 480,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-18-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229480000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-AHU-01-supply_air_temp_c",
+      "component_id": "COMP-AHU-01",
+      "metric_name": "supply_air_temp_c",
+      "value": 16.0,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-01-chilled_water_return_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_return_temp_c",
+      "value": 15.45,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-01-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 12.6,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-01-chiller_load_pct",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_load_pct",
+      "value": 100,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-01-chiller_power_kw",
+      "component_id": "COMP-CH-01",
+      "metric_name": "chiller_power_kw",
+      "value": 170.5,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-02-chilled_water_supply_temp_c",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chilled_water_supply_temp_c",
+      "value": 6.9,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-CH-02-chiller_on",
+      "component_id": "COMP-CH-02",
+      "metric_name": "chiller_on",
+      "value": 1,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-GEN-01-generator_on",
+      "component_id": "COMP-GEN-01",
+      "metric_name": "generator_on",
+      "value": 0,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-HALL-01-zone_temp_c",
+      "component_id": "COMP-HALL-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.2,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-OFC-01-zone_temp_c",
+      "component_id": "COMP-OFC-01",
+      "metric_name": "zone_temp_c",
+      "value": 23.5,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-PNL-01-electric_demand_kw",
+      "component_id": "COMP-PNL-01",
+      "metric_name": "electric_demand_kw",
+      "value": 563.5,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-PNL-02-line_voltage_v",
+      "component_id": "COMP-PNL-02",
+      "metric_name": "line_voltage_v",
+      "value": 479,
+      "timestamp": 1784229540000
+    },
+    {
+      "reading_id": "SC-COOL-01-19-COMP-UPS-01-ups_charge_pct",
+      "component_id": "COMP-UPS-01",
+      "metric_name": "ups_charge_pct",
+      "value": 99.2,
+      "timestamp": 1784229540000
+    }
+  ],
+  "operational_event_ids": [
+    "EV-01",
+    "EV-02",
+    "EV-03",
+    "EV-04",
+    "EV-05",
+    "EV-06",
+    "EV-07",
+    "EV-08",
+    "EV-09",
+    "EV-10",
+    "EV-11",
+    "EV-12",
+    "EV-13",
+    "EV-14",
+    "EV-15"
+  ]
+}

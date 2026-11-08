@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "source_id": "open_meteo",
+  "source_kind": "external_model_estimate",
+  "attribution": "Weather data by Open-Meteo.com",
+  "license": "CC BY 4.0",
+  "source_url": "https://api.open-meteo.com/v1/forecast?latitude=32.7767&longitude=-96.797&current=temperature_2m%2Crelative_humidity_2m%2Cwind_speed_10m&timezone=GMT&temperature_unit=celsius&wind_speed_unit=kmh",
+  "requested_location": {
+    "latitude": 32.7767,
+    "longitude": -96.797
+  },
+  "model_grid_location": {
+    "latitude": 32.784855,
+    "longitude": -96.80359
+  },
+  "observed_at": "2026-11-08T03:30:00.000Z",
+  "timestamp": 1794108600000,
+  "retrieved_at": "2026-11-08T03:31:02.464Z",
+  "sampling_interval_seconds": 900,
+  "signals": [
+    {
+      "metric_name": "outdoor_temp_c",
+      "value": 16.9,
+      "unit": "Cel",
+      "source_field": "temperature_2m"
+    },
+    {
+      "metric_name": "outdoor_relative_humidity_pct",
+      "value": 68,
+      "unit": "%",
+      "source_field": "relative_humidity_2m"
+    },
+    {
+      "metric_name": "outdoor_wind_speed_kmh",
+      "value": 6.6,
+      "unit": "km/h",
+      "source_field": "wind_speed_10m"
+    }
+  ],
+  "raw_response": {
+    "latitude": 32.784855,
+    "longitude": -96.80359,
+    "generationtime_ms": 0.11146068572998047,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 137,
+    "current_units": {
+      "time": "iso8601",
+      "interval": "seconds",
+      "temperature_2m": "°C",
+      "relative_humidity_2m": "%",
+      "wind_speed_10m": "km/h"
+    },
+    "current": {
+      "time": "2026-11-08T03:30",
+      "interval": 900,
+      "temperature_2m": 16.9,
+      "relative_humidity_2m": 68,
+      "wind_speed_10m": 6.6
+    }
+  }
+}
