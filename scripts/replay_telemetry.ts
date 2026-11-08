@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { once } from 'node:events';
 import { setTimeout } from 'node:timers/promises';
 import { parseArgs } from 'node:util';
+import { parseResearchCsv, prepareResearchSequence } from './research_adapter.mjs';
 
 type Reading = {
   reading_id: string;
@@ -17,11 +18,26 @@ async function main() {
   const { values } = parseArgs({ options: {
     speed: { type: 'string', default: '0' },
     phase: { type: 'string' },
+    source: { type: 'string', default: 'scenario' },
+    sequence: { type: 'string' },
   } });
   const speed = Number(values.speed);
   if (!values.speed?.trim() || !Number.isFinite(speed) || speed < 0) {
     throw new Error('--speed must be a finite nonnegative number');
   }
+  if (!['scenario', 'research'].includes(values.source!)) throw new Error('--source must be scenario or research');
+  if (values.source === 'research' && values.phase !== undefined) throw new Error('--phase applies only to scenarios');
+  if (values.source === 'scenario' && values.sequence !== undefined) throw new Error('--sequence applies only to research');
+  let rows: Reading[];
+  if (values.source === 'research') {
+    const read = (file: string) => readFile(new URL('../data/processed/' + file, import.meta.url), 'utf8');
+    rows = prepareResearchSequence(
+      parseResearchCsv(await read('hvac_readings.csv')),
+      JSON.parse(await read('hvac_provenance.json')),
+      JSON.parse(await read('hvac_fault_annotations.json')),
+      values.sequence,
+    );
+  } else {
   const scenario = JSON.parse(await readFile(new URL('../data/scenarios/cooling_cascade.json', import.meta.url), 'utf8')) as {
     timestamp_start: number; phases: Phase[]; telemetry: Reading[];
   };
@@ -29,7 +45,9 @@ async function main() {
   if (values.phase !== undefined && !phase) throw new Error('--phase must be normal, fault, or recovery');
   const start = phase ? scenario.timestamp_start + phase.start_minute * 60_000 : -Infinity;
   const end = phase ? scenario.timestamp_start + phase.end_minute_exclusive * 60_000 : Infinity;
-  const rows = scenario.telemetry.filter((row) => start <= row.timestamp && row.timestamp < end);
+  rows = scenario.telemetry.filter((row) => start <= row.timestamp && row.timestamp < end)
+    .map(row => ({ ...row, source_kind: 'synthetic', is_live: false }));
+  }
   rows.sort((a, b) => a.timestamp - b.timestamp || a.reading_id.localeCompare(b.reading_id));
   if (!rows.length) throw new Error('No matching telemetry');
   const ids = new Set<string>();

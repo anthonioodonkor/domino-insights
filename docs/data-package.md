@@ -25,19 +25,19 @@ node scripts/replay_telemetry.ts --phase fault > fault_readings.jsonl
 node scripts/replay_telemetry.ts --speed 120 > full_replay.jsonl
 ```
 
-The replay emits five-field telemetry NDJSON to stdout. Its default speed of zero emits all selected samples immediately. Positive values express multiples of real time. The offline snapshot ships with the package. To refresh it and rebuild the LLM corpus, run:
+The replay emits telemetry NDJSON with source_kind and is_live labels to stdout. Research mode additionally preserves provenance; see [integration review](data-integration.md). Its default speed of zero emits all selected samples immediately. Positive values express multiples of real time. The offline snapshot ships with the package. To refresh it and rebuild the LLM corpus, run:
 
 ```sh
 node scripts/fetch_weather.ts
 python3 scripts/build_llm.py
 ```
 
-For exact HVAC reproduction, download the official chiller archive linked in [HVAC research](docs/hvac-research.md), then run `python3 scripts/normalize_lbnl.py /path/to/archive.zip` and rebuild the LLM files.
+For exact HVAC reproduction, download the official chiller archive linked in [HVAC research](hvac-research.md), then run `python3 scripts/normalize_lbnl.py /path/to/archive.zip` and rebuild the LLM files.
 
 ## Integration handoff
 
-- [Field mapping](docs/field-mapping.md) covers ingestion shape, timestamps, units and how to join provenance.
-- [Cooling scenario](docs/scenario-cooling.md) contains event ordering, test checkpoints, and the fictional SLA calculation.
-- [Source bibliography](docs/data-sources.md) distinguishes research simulation, external model estimates, and synthetic campus data.
+- [Field mapping](field-mapping.md) covers ingestion shape, timestamps, units and how to join provenance.
+- [Cooling scenario](scenario-cooling.md) contains event ordering, test checkpoints, and the fictional SLA calculation.
+- [Source bibliography](data-sources.md) distinguishes research simulation, external model estimates, and synthetic campus data.
 
-Live SpacetimeDB reducer integration is pending the published reducer signature and generated client bindings from Developer 2. The local worker supports offline validation and does not connect to a database. Confirm the seed IDs, telemetry timestamp type, event reducer contract and retry/idempotency behavior with Developer 2 before connecting. Suggested project branch is `feature/data-research-integration`.
+Live SpacetimeDB reducer integration is pending the published reducer signature and generated client bindings from Developer 2. The local worker supports offline validation and does not connect to a database. Confirm the seed IDs, telemetry timestamp type, event reducer contract and retry/idempotency behavior with Developer 2 before connecting. The current local integration branch is `integration/data-pipeline`.

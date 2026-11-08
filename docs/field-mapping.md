@@ -1,5 +1,11 @@
 # Data contract and provenance
 
+See [integration review](data-integration.md) for the campus crosswalk and pending
+backend contract. The research adapter maps `COMP-CH-01` to `MS-CHILLER-1` only in
+its output, preserving the original reading and metadata in `provenance`.
+Research output requires one sequence and is always labeled historical
+`research_simulation` with `is_live: false`. The fixed UTC offset is unverified.
+
 `data/processed/hvac_readings.csv`, `data/synthetic/utility_readings.csv` and the scenario's `telemetry` array use the same five fields. CSV values and timestamps must be parsed as numbers before reducer submission.
 
 | Field | Type | Contract |
