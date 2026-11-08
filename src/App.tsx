@@ -1,4 +1,4 @@
-
+import AskDominoChat from './AskDominoChat';
 import type { CSSProperties } from 'react';
 import { useSpacetimeDB, useTable } from 'spacetimedb/react';
 import { tables } from './module_bindings';
@@ -161,7 +161,9 @@ export default function App() {
             ))}
           </ul>
         </section>
-      </div>
+            </div>
+
+      <AskDominoChat />
     </main>
   );
 }
