@@ -30,8 +30,9 @@ Domino Insights provides:
 | Dependency network | Identifies direct relationships between upstream and downstream equipment. |
 | Ask Domino AI | Converts natural-language questions into explanations grounded in approved database records. |
 | Cascade assessment engine | Supports deterministic hypothetical failure analysis through a separate backend reducer. |
+| What breaks if…? | Runs and compares saved failure assessments, explains dependency loss and surviving alternatives, estimates duration-based tenant exposure, and starts an explicitly confirmed simulated incident/work order. |
 
-The dashboard is read-oriented. Its SpacetimeDB subscriptions synchronize stored records as they change; this does **not** mean the underlying demonstration telemetry comes from live physical equipment.
+The dashboard combines read-oriented exploration with an interactive **What breaks if…?** scenario lab. Running an assessment saves a hypothetical result; a separate confirmation can initiate a simulated incident and work order. Its SpacetimeDB subscriptions synchronize stored records as they change; this does **not** mean the underlying demonstration telemetry comes from live physical equipment. See [the assessment demo walkthrough](docs/what-if-demo.md) for the user journey, financial assumptions, and verification commands.
 
 ---
 

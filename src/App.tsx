@@ -1,5 +1,6 @@
 import DashboardSidebar from './DashboardSidebar';
 import AskDominoChat from './AskDominoChat';
+import FailureAssessment from './FailureAssessment';
 import { useSpacetimeDB, useTable } from 'spacetimedb/react';
 import { tables } from './module_bindings';
 
@@ -88,9 +89,11 @@ return (
         </strong>
 
         <p>Database: cbre-telemetry-dev</p>
-        <p>Mode: Read-only verification</p>
+        <p>Mode: Synthetic campus exploration and explicit simulation actions</p>
       </div>
 
+
+            <FailureAssessment assets={assets} tenants={tenants} ready={assetsReady && tenantsReady} />
 
             {/* Compact overview row */}
             <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-12">

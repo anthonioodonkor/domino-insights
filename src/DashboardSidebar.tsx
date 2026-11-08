@@ -1,6 +1,7 @@
 
 import {
   Activity,
+  FlaskConical,
   Building2,
   ClipboardList,
   LayoutDashboard,
@@ -14,6 +15,7 @@ type DashboardSidebarProps = {
 };
 
 const navigation = [
+  { href: '#what-if', label: 'What breaks if…?', icon: FlaskConical },
   { href: '#campus', label: 'Campus overview', icon: LayoutDashboard },
   { href: '#assets', label: 'Infrastructure assets', icon: Server },
   { href: '#tenants', label: 'Tenant exposure', icon: Users },
