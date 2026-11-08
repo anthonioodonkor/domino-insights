@@ -97,6 +97,22 @@ export const OperationalEvent = __t.object("OperationalEvent", {
 });
 export type OperationalEvent = __Infer<typeof OperationalEvent>;
 
+export const ResearchTelemetry = __t.object("ResearchTelemetry", {
+  readingId: __t.string(),
+  componentId: __t.string(),
+  metricName: __t.string(),
+  value: __t.f64(),
+  timestamp: __t.f64(),
+  sourceKind: __t.string(),
+  isLive: __t.bool(),
+  sequenceId: __t.string(),
+  sourceComponentId: __t.string(),
+  timestampVerification: __t.string(),
+  provenanceJson: __t.string(),
+  ingestedAt: __t.f64(),
+});
+export type ResearchTelemetry = __Infer<typeof ResearchTelemetry>;
+
 export const SystemComponent = __t.object("SystemComponent", {
   componentId: __t.string(),
   facilityId: __t.string(),

@@ -38,6 +38,7 @@ import AcknowledgeFaultReducer from "./acknowledge_fault_reducer";
 import AnalyzeCascadeReducer from "./analyze_cascade_reducer";
 import ApproveDemoMitigationReducer from "./approve_demo_mitigation_reducer";
 import IngestDemoTelemetryReducer from "./ingest_demo_telemetry_reducer";
+import IngestResearchTelemetryReducer from "./ingest_research_telemetry_reducer";
 import LogIncidentReducer from "./log_incident_reducer";
 import ResolveDemoFaultReducer from "./resolve_demo_fault_reducer";
 import SeedDemoCampusReducer from "./seed_demo_campus_reducer";
@@ -55,6 +56,7 @@ import FacilityRow from "./facility_table";
 import IncidentLogRow from "./incident_log_table";
 import IncidentResponseRow from "./incident_response_table";
 import OperationalEventRow from "./operational_event_table";
+import ResearchTelemetryRow from "./research_telemetry_table";
 import SystemComponentRow from "./system_component_table";
 import SystemDependencyRow from "./system_dependency_table";
 import TelemetryReadingRow from "./telemetry_reading_table";
@@ -153,6 +155,17 @@ const tablesSchema = __schema({
       { name: 'operational_event_event_id_key', constraint: 'unique', columns: ['eventId'] },
     ],
   }, OperationalEventRow),
+  researchTelemetry: __table({
+    name: 'research_telemetry',
+    indexes: [
+      { accessor: 'reading_id', name: 'research_telemetry_reading_id_idx_btree', algorithm: 'btree', columns: [
+        'readingId',
+      ] },
+    ],
+    constraints: [
+      { name: 'research_telemetry_reading_id_key', constraint: 'unique', columns: ['readingId'] },
+    ],
+  }, ResearchTelemetryRow),
   systemComponent: __table({
     name: 'system_component',
     indexes: [
@@ -216,6 +229,7 @@ const reducersSchema = __reducers(
   __reducerSchema("analyze_cascade", AnalyzeCascadeReducer),
   __reducerSchema("approve_demo_mitigation", ApproveDemoMitigationReducer),
   __reducerSchema("ingest_demo_telemetry", IngestDemoTelemetryReducer),
+  __reducerSchema("ingest_research_telemetry", IngestResearchTelemetryReducer),
   __reducerSchema("log_incident", LogIncidentReducer),
   __reducerSchema("resolve_demo_fault", ResolveDemoFaultReducer),
   __reducerSchema("seed_demo_campus", SeedDemoCampusReducer),
@@ -243,6 +257,8 @@ type __SchemaWithTableAccessorAliases = Omit<typeof tablesSchema.schemaType, "ta
     readonly "incident_response": Omit<typeof tablesSchema.schemaType.tables["incidentResponse"], "accessorName"> & { readonly accessorName: "incident_response" };
     /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
     readonly "operational_event": Omit<typeof tablesSchema.schemaType.tables["operationalEvent"], "accessorName"> & { readonly accessorName: "operational_event" };
+    /** @deprecated Use `researchTelemetry` instead. This alias will be removed in the next major version. */
+    readonly "research_telemetry": Omit<typeof tablesSchema.schemaType.tables["researchTelemetry"], "accessorName"> & { readonly accessorName: "research_telemetry" };
     /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
     readonly "system_component": Omit<typeof tablesSchema.schemaType.tables["systemComponent"], "accessorName"> & { readonly accessorName: "system_component" };
     /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */
@@ -278,6 +294,7 @@ const tableAccessorAliases = {
   "incident_log": "incidentLog",
   "incident_response": "incidentResponse",
   "operational_event": "operationalEvent",
+  "research_telemetry": "researchTelemetry",
   "system_component": "systemComponent",
   "system_dependency": "systemDependency",
   "telemetry_reading": "telemetryReading",
@@ -317,6 +334,8 @@ export type DbView = __DbViewBase & {
   readonly "incident_response": __DbViewBase["incidentResponse"];
   /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
   readonly "operational_event": __DbViewBase["operationalEvent"];
+  /** @deprecated Use `researchTelemetry` instead. This alias will be removed in the next major version. */
+  readonly "research_telemetry": __DbViewBase["researchTelemetry"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
   readonly "system_component": __DbViewBase["systemComponent"];
   /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */
@@ -345,6 +364,8 @@ export type Tables = __TablesBase & {
   readonly "incident_response": __TablesBase["incidentResponse"];
   /** @deprecated Use `operationalEvent` instead. This alias will be removed in the next major version. */
   readonly "operational_event": __TablesBase["operationalEvent"];
+  /** @deprecated Use `researchTelemetry` instead. This alias will be removed in the next major version. */
+  readonly "research_telemetry": __TablesBase["researchTelemetry"];
   /** @deprecated Use `systemComponent` instead. This alias will be removed in the next major version. */
   readonly "system_component": __TablesBase["systemComponent"];
   /** @deprecated Use `systemDependency` instead. This alias will be removed in the next major version. */

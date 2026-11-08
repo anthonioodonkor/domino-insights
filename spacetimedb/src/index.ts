@@ -183,7 +183,24 @@ const db = schema({
     recovery_reading_id: t.string(),
   }),
 
+  
+  // STEP 6: Historical research telemetry
+  research_telemetry: table({ public: true }, {
+    reading_id: t.string().primaryKey(),
+    component_id: t.string(),
+    metric_name: t.string(),
+    value: t.number(),
+    timestamp: t.number(),
 
+    source_kind: t.string(),
+    is_live: t.bool(),
+    sequence_id: t.string(),
+    source_component_id: t.string(),
+    timestamp_verification: t.string(),
+    provenance_json: t.string(),
+
+    ingested_at: t.number(),
+  }),
 
 });
 
@@ -1217,5 +1234,140 @@ export const resolveDemoFault = db.reducer(
 );
 
 
+export const ingestResearchTelemetry = db.reducer(
+  {
+    reading_id: t.string(),
+    component_id: t.string(),
+    metric_name: t.string(),
+    value: t.number(),
+    timestamp: t.number(),
+    source_kind: t.string(),
+    is_live: t.bool(),
+    sequence_id: t.string(),
+    source_component_id: t.string(),
+    timestamp_verification: t.string(),
+    provenance_json: t.string(),
+  },
+  (ctx, row) => {
+    const allowedSequences = ['LBNL-2E91', 'LBNL-7C4A'];
+    const allowedMetrics = [
+      'chilled_water_return_temp_c',
+      'chilled_water_supply_temp_c',
+      'chiller_on',
+      'chiller_power_kw',
+    ];
+
+    // Accept only the reviewed historical research contract.
+    if (
+      row.source_kind !== 'research_simulation' ||
+      row.is_live !== false ||
+      !allowedSequences.includes(row.sequence_id) ||
+      row.timestamp_verification !== 'unverified_fixed_offset'
+    ) {
+      throw new Error('Invalid research source metadata.');
+    }
+
+    if (
+      row.source_component_id !== 'COMP-CH-01' ||
+      row.component_id !== 'MS-CHILLER-1' ||
+      !row.reading_id.startsWith(row.sequence_id + '-') ||
+      !allowedMetrics.includes(row.metric_name)
+    ) {
+      throw new Error('Invalid research component or metric.');
+    }
+
+    if (
+      !Number.isFinite(row.value) ||
+      !Number.isSafeInteger(row.timestamp) ||
+      row.timestamp <= 0 ||
+      row.timestamp % 60_000 !== 0
+    ) {
+      throw new Error('Invalid numerical measurement.');
+    }
+
+    if (
+      row.metric_name === 'chiller_on' &&
+      row.value !== 0 &&
+      row.value !== 1
+    ) {
+      throw new Error('chiller_on must be 0 or 1.');
+    }
+
+    // Confirm that the mapped campus asset exists.
+    const asset = ctx.db.asset_profile.component_id.find(
+      row.component_id
+    );
+
+    if (!asset || asset.domain !== 'HVAC') {
+      throw new Error('Research target asset not found.');
+    }
+
+    // Validate the provenance supplied by the offline adapter.
+    let provenance: any;
+
+    try {
+      provenance = JSON.parse(row.provenance_json);
+    } catch {
+      throw new Error('Invalid provenance JSON.');
+    }
+
+    if (
+      !provenance ||
+      provenance.source_reading?.reading_id !== row.reading_id ||
+      provenance.source_reading?.component_id !==
+        row.source_component_id ||
+      provenance.source_reading?.metric_name !== row.metric_name ||
+      provenance.source_reading?.value !== row.value ||
+      provenance.source_reading?.timestamp !== row.timestamp ||
+      provenance.mapping?.source_component_id !==
+        row.source_component_id ||
+      provenance.mapping?.target_component_id !== row.component_id ||
+      provenance.source_sequence?.sequence_id !== row.sequence_id ||
+      provenance.source_metadata?.source_kind !==
+        'research_simulation' ||
+      provenance.source_metadata?.source_id !==
+        'lbnl_chiller_plant' ||
+      provenance.source_metadata?.timestamp?.assumed_offset !==
+        '-06:00' ||
+      provenance.timestamp_verification !==
+        row.timestamp_verification
+    ) {
+      throw new Error('Research provenance mismatch.');
+    }
+
+    // A retry with identical data should not insert again.
+    const existing =
+      ctx.db.research_telemetry.reading_id.find(row.reading_id);
+
+    if (existing) {
+      const identical =
+        existing.component_id === row.component_id &&
+        existing.metric_name === row.metric_name &&
+        existing.value === row.value &&
+        existing.timestamp === row.timestamp &&
+        existing.source_kind === row.source_kind &&
+        existing.is_live === row.is_live &&
+        existing.sequence_id === row.sequence_id &&
+        existing.source_component_id === row.source_component_id &&
+        existing.timestamp_verification ===
+          row.timestamp_verification &&
+        existing.provenance_json === row.provenance_json;
+
+      if (identical) {
+        console.info('Research reading already ingested.');
+        return;
+      }
+
+      throw new Error('Conflicting research reading ID.');
+    }
+
+    ctx.db.research_telemetry.insert({
+      ...row,
+      ingested_at: Date.now(),
+    });
+
+    console.info(`Research reading stored: ${row.reading_id}`);
+  }
+);
 
 
